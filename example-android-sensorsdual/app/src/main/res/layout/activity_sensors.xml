@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.konker.konkersensors.SensorsActivity">
+
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:background="@drawable/barrasuperior"
+            android:backgroundTint="@color/sensorsbackground" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Back"
+                android:id="@+id/backButton"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:columnCount="9"
+                    android:orientation="horizontal"
+                    android:rowCount="20"
+                    android:background="@color/sensorsbackground"
+                    android:layout_gravity="center_horizontal"
+
+                    android:layout_margin="2dp"
+                    android:gravity="center"
+                    android:horizontalSpacing="2dp"
+                    android:verticalSpacing="2dp"
+                    android:numColumns="auto_fit"
+                    android:columnWidth="2dp"
+                    android:stretchMode="columnWidth"
+
+
+                    >
+
+
+
+                    <ScrollView
+                        android:layout_columnSpan="2"
+                        android:layout_rowSpan="2"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView1"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="0"
+                        android:layout_column="0"
+                        >
+
+                        <TextView
+
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+                    <ScrollView
+                        android:layout_columnSpan="2"
+                        android:layout_rowSpan="2"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView2"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="0"
+                        android:layout_column="2">
+
+                        <TextView
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+                    <ScrollView
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView3"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="0"
+                        android:layout_column="5">
+
+                        <TextView
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+                    <ScrollView
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView4"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="0"
+                        android:layout_column="7">
+
+                        <TextView
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText4"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+
+                    <ScrollView
+                        android:layout_columnSpan="2"
+                        android:layout_rowSpan="2"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView5"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="1"
+                        android:layout_column="0">
+
+                        <TextView
+
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText5"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+                    <ScrollView
+                        android:layout_columnSpan="2"
+                        android:layout_rowSpan="2"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView6"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="1"
+                        android:layout_column="2">
+
+                        <TextView
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText6"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+                    <ScrollView
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView7"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="1"
+                        android:layout_column="5">
+
+                        <TextView
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText7"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+                    <ScrollView
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView8"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="1"
+                        android:layout_column="7">
+
+                        <TextView
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText8"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+
+                    <ScrollView
+                        android:layout_columnSpan="2"
+                        android:layout_rowSpan="2"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView9"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="2"
+                        android:layout_column="0">
+
+                        <TextView
+
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText9"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+                    <ScrollView
+                        android:layout_columnSpan="2"
+                        android:layout_rowSpan="2"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView10"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="2"
+                        android:layout_column="2">
+
+                        <TextView
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText10"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+                    <ScrollView
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView11"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="2"
+                        android:layout_column="5">
+
+                        <TextView
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText11"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+                    <ScrollView
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView12"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="2"
+                        android:layout_column="7">
+
+                        <TextView
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText12"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+
+                    <ScrollView
+                        android:layout_columnSpan="2"
+                        android:layout_rowSpan="2"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView13"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="3"
+                        android:layout_column="0">
+
+                        <TextView
+
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText13"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+                    <ScrollView
+                        android:layout_columnSpan="2"
+                        android:layout_rowSpan="2"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView14"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="3"
+                        android:layout_column="2">
+
+                        <TextView
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText14"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+                    <ScrollView
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView15"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="3"
+                        android:layout_column="5">
+
+                        <TextView
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText15"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+                    <ScrollView
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView16"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="3"
+                        android:layout_column="7">
+
+                        <TextView
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText16"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+
+                    <ScrollView
+                        android:layout_columnSpan="2"
+                        android:layout_rowSpan="2"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView17"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="4"
+                        android:layout_column="0">
+
+                        <TextView
+
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText17"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+                    <ScrollView
+                        android:layout_columnSpan="2"
+                        android:layout_rowSpan="2"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView18"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="4"
+                        android:layout_column="2">
+
+                        <TextView
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText18"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+                    <ScrollView
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView19"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="4"
+                        android:layout_column="5">
+
+                        <TextView
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText19"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+
+                    <ScrollView
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:id="@+id/scrollView20"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="4"
+                        android:layout_column="7">
+
+                        <TextView
+                            style="@style/AppTheme"
+                            android:id="@+id/DebugText20"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="500"
+
+                            android:text=""
+                            android:layout_weight="0.18"
+
+
+                            android:textColor="@color/sensorstext"
+                            android:gravity="top" />
+                    </ScrollView>
+
+
+                </GridLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Button"
+                    android:id="@+id/button" />
+            </LinearLayout>
+
+            <WebView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_weight="0.18"
+                android:textColor="@color/sensorstext"
+                android:gravity="top"
+                android:text=""
+                android:visibility="visible"
+                android:background="#000000"
+                android:id="@+id/usermessageWebview" />
+
+
+
+        </RelativeLayout>
+
+
+</LinearLayout>
+
+
+

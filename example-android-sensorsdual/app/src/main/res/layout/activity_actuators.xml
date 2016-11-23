@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.konker.konkersensors.ActuatorsActivity">
+
+
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:background="@drawable/barrasuperior"
+        android:backgroundTint="@color/sensorsbackground" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:id="@+id/backButton"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:visibility="visible"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnCount="9"
+                android:orientation="horizontal"
+                android:rowCount="20"
+                android:background="@color/sensorsbackground"
+                android:layout_gravity="center_horizontal"
+
+                android:layout_margin="2dp"
+                android:gravity="center"
+                android:horizontalSpacing="2dp"
+                android:verticalSpacing="2dp"
+                android:numColumns="auto_fit"
+                android:columnWidth="2dp"
+                android:stretchMode="columnWidth"
+
+
+                >
+
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="224dp"
+                    android:id="@+id/scrollView1"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_row="1"
+                    android:layout_column="1">
+
+                    <TextView
+                        style="@style/AppTheme"
+                        android:id="@+id/DebugText1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:maxLines="500"
+
+                        android:text=""
+                        android:layout_weight="0.18"
+
+
+                        android:textColor="@color/sensorstext"
+                        android:gravity="top" />
+                </ScrollView>
+
+
+                <ScrollView
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:id="@+id/scrollView20"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_row="2"
+                    android:layout_column="1">
+
+                    <TextView
+                        style="@style/AppTheme"
+                        android:id="@+id/DebugText20"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:maxLines="500"
+
+                        android:text=""
+                        android:layout_weight="0.18"
+
+
+                        android:textColor="@color/sensorstext"
+                        android:gravity="top" />
+                </ScrollView>
+
+
+
+
+
+            </GridLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Button"
+                android:id="@+id/button" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1"
+            android:id="@+id/alertLayout"
+            android:background="@android:color/background_light">
+
+            <TextView
+                android:text="ALERT ALERT!!"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/alertText"
+                android:layout_weight="0.40"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+                android:textAlignment="center"
+                android:fontFamily="sans-serif"
+                android:textColor="@android:color/holo_red_dark" />
+
+        </LinearLayout>
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_weight="0.18"
+            android:textColor="@color/sensorstext"
+            android:gravity="top"
+            android:text=""
+            android:visibility="visible"
+            android:background="#000000"
+            android:id="@+id/usermessageWebview" />
+
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
+
+
+

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+        <string-array name="planets_array">
+            <item>Each second</item>
+            <item>Each minute</item>
+            <item>Each 5 minutes</item>
+            <item>Each 30 minutes</item>
+            <item>Each hour</item>
+            <item>Each day</item>
+        </string-array>
+
+
+
+</resources>

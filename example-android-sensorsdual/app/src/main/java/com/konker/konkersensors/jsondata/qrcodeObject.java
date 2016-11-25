@@ -47,10 +47,10 @@ public class qrcodeObject {
             urlPubHTTPS="https://" + GeneralSettings.getString("host") + ":" + GeneralSettings.getString("http")  + GeneralSettings.getString("ctx") + "/" + GeneralSettings.getString("pub");
             urlSubHTTP="http://" + GeneralSettings.getString("host") + ":" + GeneralSettings.getString("http") + GeneralSettings.getString("ctx") + "/" + GeneralSettings.getString("sub");
             urlSubHTTPS="https://" + GeneralSettings.getString("host") + ":" + GeneralSettings.getString("http")  + GeneralSettings.getString("ctx") + "/" +  GeneralSettings.getString("sub");
-            urlSubMQTT="mqtt://" + GeneralSettings.getString("host") + ":" + GeneralSettings.getString("mqtt");
-            urlSubMQTTS="mqtts://" + GeneralSettings.getString("host") + ":" + GeneralSettings.getString("mqtt-tls");
-            urlPubMQTT="mqtt://" + GeneralSettings.getString("host") + ":" + GeneralSettings.getString("mqtt");
-            urlPubMQTTS="mqtts://" + GeneralSettings.getString("host") + ":" + GeneralSettings.getString("mqtt-tls");
+            urlSubMQTT="mqtt://" + GeneralSettings.getString("host-mqtt") + ":" + GeneralSettings.getString("mqtt");
+            urlSubMQTTS="mqtts://" + GeneralSettings.getString("host-mqtt") + ":" + GeneralSettings.getString("mqtt-tls");
+            urlPubMQTT="mqtt://" + GeneralSettings.getString("host-mqtt") + ":" + GeneralSettings.getString("mqtt");
+            urlPubMQTTS="mqtts://" + GeneralSettings.getString("host-mqtt") + ":" + GeneralSettings.getString("mqtt-tls");
 
         } catch (JSONException e) {
             e.printStackTrace();

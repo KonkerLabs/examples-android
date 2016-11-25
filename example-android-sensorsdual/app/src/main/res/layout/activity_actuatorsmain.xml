@@ -21,18 +21,6 @@
             android:scaleType = "centerCrop"
              />
 
-        <Button
-            android:text="QR CODE"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/buttonGetQR"
-            android:layout_above="@+id/nameEditText"
-            android:layout_alignLeft="@+id/textView"
-            android:layout_alignStart="@+id/textView"
-            android:layout_alignRight="@+id/loginButton"
-            android:layout_alignEnd="@+id/loginButton"
-            android:layout_below="@+id/textView5" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,86 +28,6 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:id="@+id/versionTextView" />
-
-        <TextView
-            android:text="www.konkerlabs.com"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="40dp"
-            android:id="@+id/textView"
-            android:autoLink="web" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Start listening"
-            android:id="@+id/loginButton"
-            android:layout_marginTop="45dp"
-            android:layout_below="@+id/radioMQTT"
-            android:layout_toLeftOf="@+id/radioMQTT"
-            android:layout_toStartOf="@+id/radioMQTT" />
-
-        <RadioButton
-            android:text="REST"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioRest"
-            android:checked="true"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/textView"
-            android:layout_toEndOf="@+id/textView" />
-
-        <RadioButton
-            android:text="MQTT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioMQTT"
-            android:layout_below="@+id/radioRest"
-            android:layout_alignLeft="@+id/radioRest"
-            android:layout_alignStart="@+id/radioRest" />
-
-        <TextView
-            android:text="Method"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView4"
-            android:layout_above="@+id/radioRest"
-            android:layout_alignLeft="@+id/radioRest"
-            android:layout_alignStart="@+id/radioRest" />
-
-        <Switch
-            android:text="Collect data in background "
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/switch1"
-            android:layout_above="@+id/textView4"
-            android:layout_centerHorizontal="true"
-            android:switchTextAppearance="@style/TextAppearance.AppCompat"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
-
-        <TextView
-            android:text="This application uses internet connection."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView3"
-            android:layout_marginBottom="26dp"
-            android:layout_above="@+id/textView4"
-            android:layout_alignRight="@+id/radioRest"
-            android:layout_alignEnd="@+id/radioRest" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="@string/app_username"
-            android:ems="10"
-            android:id="@+id/nameEditText"
-            android:textAlignment="center"
-            android:layout_above="@+id/passwordEditText"
-            android:layout_alignRight="@+id/textView4"
-            android:layout_alignEnd="@+id/textView4" />
 
         <TextView
             android:text="Actuators"
@@ -134,32 +42,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
+            android:text="@string/app_username"
+            android:ems="10"
+            android:id="@+id/nameEditText"
+            android:textAlignment="center"
+            android:layout_below="@+id/buttonGetQR"
+            android:layout_centerHorizontal="true" />
+
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
             android:text="@string/app_password"
             android:ems="10"
             android:id="@+id/passwordEditText"
             android:textAlignment="center"
-            android:layout_above="@+id/URLeditText"
+            android:layout_below="@+id/nameEditText"
             android:layout_alignLeft="@+id/nameEditText"
             android:layout_alignStart="@+id/nameEditText" />
 
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinnerFrequency"
-            android:layout_marginTop="18dp"
-            android:layout_below="@+id/radioMQTT"
-            android:layout_alignLeft="@+id/textView5"
-            android:layout_alignStart="@+id/textView5" />
-
-        <TextView
-            android:text="Frequency:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:layout_alignBottom="@+id/spinnerFrequency"
-            android:layout_toLeftOf="@+id/spinnerFrequency"
-            android:layout_toStartOf="@+id/spinnerFrequency" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -170,49 +72,130 @@
             android:id="@+id/URLeditText"
             android:textAlignment="viewStart"
             android:textSize="14sp"
-            android:layout_above="@+id/textView3"
-            android:layout_alignLeft="@+id/textView3"
-            android:layout_alignStart="@+id/textView3"
-            android:layout_alignRight="@+id/textView3"
-            android:layout_alignEnd="@+id/textView3" />
+            android:layout_below="@+id/passwordEditText"
+            android:layout_alignRight="@+id/checkBoxVibrate"
+            android:layout_alignEnd="@+id/checkBoxVibrate"
+            android:layout_alignLeft="@+id/textView4"
+            android:layout_alignStart="@+id/textView4" />
+        <TextView
+            android:text="Channel:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView10"
+            android:layout_alignBaseline="@+id/channelEditText"
+            android:layout_alignBottom="@+id/channelEditText"
+            android:layout_toLeftOf="@+id/channelEditText"
+            android:layout_toStartOf="@+id/channelEditText" />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start listening"
+            android:id="@+id/loginButton"
+            android:layout_below="@+id/spinnerFrequency"
+            android:layout_centerHorizontal="true" />
+
+
+        <Button
+            android:text="QR CODE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonGetQR"
+            android:layout_below="@+id/textView5"
+            android:layout_alignLeft="@+id/nameEditText"
+            android:layout_alignStart="@+id/nameEditText"
+            android:layout_alignRight="@+id/nameEditText"
+            android:layout_alignEnd="@+id/nameEditText" />
+
 
         <CheckBox
             android:text="Ring"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/checkBoxRing"
-            android:layout_below="@+id/radioRest"
-            android:layout_toLeftOf="@+id/checkBoxPhoto"
-            android:layout_toStartOf="@+id/checkBoxPhoto"
-            android:layout_marginTop="12dp" />
-
-        <CheckBox
-            android:text="Photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBoxPhoto"
-            android:layout_alignBaseline="@+id/checkBoxRing"
-            android:layout_alignBottom="@+id/checkBoxRing"
-            android:layout_centerHorizontal="true"
-            android:visibility="invisible"/>
-
-        <CheckBox
-            android:text="Alert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/checkBoxVibrate"
-            android:layout_toRightOf="@+id/checkBoxVibrate"
-            android:layout_toEndOf="@+id/checkBoxVibrate"
-            android:id="@+id/checkBoxAlert" />
+            android:layout_alignBaseline="@+id/checkBoxAlert"
+            android:layout_alignBottom="@+id/checkBoxAlert"
+            android:layout_toRightOf="@+id/checkBoxAlert"
+            android:layout_toEndOf="@+id/checkBoxAlert" />
 
         <CheckBox
             android:text="Vibrate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/checkBoxVibrate"
-            android:layout_above="@+id/checkBoxPhoto"
-            android:layout_alignLeft="@+id/checkBoxRing"
-            android:layout_alignStart="@+id/checkBoxRing" />
+            android:layout_alignBaseline="@+id/checkBoxRing"
+            android:layout_alignBottom="@+id/checkBoxRing"
+            android:layout_toRightOf="@+id/checkBoxRing"
+            android:layout_toEndOf="@+id/checkBoxRing" />
+
+        <RadioButton
+            android:text="REST"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioRest"
+            android:checked="true"
+            android:layout_below="@+id/channelEditText"
+            android:layout_toLeftOf="@+id/textView5"
+            android:layout_toStartOf="@+id/textView5" />
+
+        <RadioButton
+            android:text="MQTT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioMQTT"
+            android:layout_below="@+id/channelEditText"
+            android:layout_alignRight="@+id/buttonGetQR"
+            android:layout_alignEnd="@+id/buttonGetQR" />
+
+        <TextView
+            android:text="Method"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView4"
+            android:layout_alignBaseline="@+id/radioRest"
+            android:layout_alignBottom="@+id/radioRest"
+            android:layout_toLeftOf="@+id/radioRest"
+            android:layout_toStartOf="@+id/radioRest" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="out"
+            android:ems="10"
+            android:id="@+id/channelEditText"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:layout_below="@+id/URLeditText"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:text="www.konkerlabs.com"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"
+            android:id="@+id/textView"
+            android:autoLink="web" />
+
+        <Switch
+            android:text="Collect data in background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/switch1"
+            android:layout_below="@+id/textView4"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="13dp" />
+
+        <TextView
+            android:text="This application uses internet connection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView4"
+            android:layout_below="@+id/loginButton"
+            android:layout_alignLeft="@+id/radioRest"
+            android:layout_alignStart="@+id/radioRest" />
 
         <TextView
             android:text="Actions"
@@ -220,9 +203,28 @@
             android:layout_height="wrap_content"
             android:id="@+id/textView8"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:layout_above="@+id/checkBoxVibrate"
-            android:layout_alignLeft="@+id/checkBoxVibrate"
-            android:layout_alignStart="@+id/checkBoxVibrate" />
+            android:layout_below="@+id/switch1"
+            android:layout_alignLeft="@+id/textView4"
+            android:layout_alignStart="@+id/textView4" />
+
+        <CheckBox
+            android:text="Alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBoxAlert"
+            android:layout_below="@+id/textView8"
+            android:layout_alignLeft="@+id/textView8"
+            android:layout_alignStart="@+id/textView8" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerFrequency"
+            android:layout_below="@+id/radioMQTT"
+            android:layout_alignRight="@+id/textView"
+            android:layout_alignEnd="@+id/textView"
+            android:layout_alignLeft="@+id/loginButton"
+            android:layout_alignStart="@+id/loginButton" />
 
 
     </RelativeLayout>

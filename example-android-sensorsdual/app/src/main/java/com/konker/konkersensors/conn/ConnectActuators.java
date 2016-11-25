@@ -11,7 +11,8 @@ import com.konker.konkersensors.conn.ConnResponse.ConnResponse;
 import com.konker.konkersensors.conn.ErrorCollector.ErrorCollector;
 import com.konker.konkersensors.conn.ErrorCollector.ErrorObject;
 import com.konker.konkersensors.exceptions.failedProcedureException;
-import com.konker.konkersensors.pubsub.MqttPubSubGuy;
+import com.konker.konkersensors.pubsub.MqttPubGuy;
+import com.konker.konkersensors.pubsub.MqttSubGuy;
 import com.konker.konkersensors.pubsub.RestPubSubGuy;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -136,7 +137,10 @@ public class ConnectActuators {
 
         updateTimer();
 
-        if(res.toLowerCase().indexOf("start")>-1 && updated){
+        if(res.toLowerCase().indexOf("start")>-1 && (updated || !actuatorObj.connection.transmitMethod.equals("rest"))){
+           if(!actuatorObj.connection.transmitMethod.equals("rest")){
+                ConnResponse.clear();
+            }
             if(actuatorObj.vibrate){
                 ActuatorAction.vibrate(actuatorObj.context);
             }
@@ -151,7 +155,9 @@ public class ConnectActuators {
             }
 
         }else{
-            stopActuators();
+            if(actuatorObj.connection.transmitMethod.equals("rest")){
+                stopActuators();
+            }
         }
 
     }
@@ -184,7 +190,6 @@ public  void stopActuators(){
             try {
                 if (actuatorObj!=null) {
                     setMessageInvisible();
-
                     subAll(actuatorObj);
 
 
@@ -197,7 +202,9 @@ public  void stopActuators(){
                 ErrorCollector.clear();
 
             } finally {
+
                 handler.postDelayed(ru, await);
+
             }
         }
     }
@@ -220,7 +227,7 @@ public  void stopActuators(){
 
         if (actuatorObj.connection.transmitMethod.equals("rest")){
 
-            RestPubSubGuy restPoster= new RestPubSubGuy(base64userpass, actuatorObj.connection.url, "GET", "out", json);
+            RestPubSubGuy restPoster= new RestPubSubGuy(base64userpass, actuatorObj.connection.url, "GET", actuatorObj.connection.channel, json);
             executor.execute(restPoster);
 
         }else{
@@ -242,7 +249,7 @@ public  void stopActuators(){
 
 
 
-            MqttPubSubGuy mqttSubs= new MqttPubSubGuy("sub/" + actuatorObj.connection.username+ "/", json.toString(),client, conOpt);
+            MqttSubGuy mqttSubs= new MqttSubGuy("sub/" + actuatorObj.connection.username+ "/" + actuatorObj.connection.channel, client, conOpt);
             executor.execute(mqttSubs);
         }
 

@@ -18,21 +18,58 @@ public class ActuatorAction {
     private static Long await=1000L;
     private static LinearLayout alertL;
     private static Ringtone r;
+    private static long startMillis=0L;
+
     public static void vibrate(Context context){
+        long millis = System.currentTimeMillis() - startMillis;
+
+
+        if (System.currentTimeMillis() - startMillis<1000L){
+            startMillis=0L;
+            return;
+        }
+
+
         Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         // Vibrate for 500 milliseconds
         v.vibrate(await);
+
+        if(startMillis==0L){
+            startMillis=System.currentTimeMillis();
+        }
     }
 
     public static void alert(LinearLayout alertLayout){
+        if (System.currentTimeMillis() - startMillis<1000L){
+            startMillis=0L;
+            return;
+        }
+
+
         alertL=alertLayout;
         doStartLoopAlert();
+
+
+        if(startMillis==0L){
+            startMillis=System.currentTimeMillis();
+        }
     }
 
     public static void ring(Context context){
+        if (System.currentTimeMillis() - startMillis<1000L){
+            startMillis=0L;
+            return;
+        }
+
+
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         r = RingtoneManager.getRingtone(context, notification);
         doStartLoopRingtone();
+
+
+        if(startMillis==0L){
+            startMillis=System.currentTimeMillis();
+        }
     }
 
     public static void photo(){

@@ -33,6 +33,7 @@ public class ActuatorsMainActivity extends Activity  {
     EditText passwordEditText;
     Switch backgroundSwitch;
     EditText URLeditText;
+    EditText channelEditText;
     Button startButton;
     Boolean nameEdited=false;
     Boolean passwordEdited=false;
@@ -90,14 +91,16 @@ public class ActuatorsMainActivity extends Activity  {
         passwordEditText  = (EditText) findViewById(R.id.passwordEditText);
         backgroundSwitch= (Switch) findViewById(R.id.switch1);
         URLeditText = (EditText) findViewById(R.id.URLeditText);
+        channelEditText = (EditText) findViewById(R.id.channelEditText);
         radioRest=(RadioButton) findViewById(R.id.radioRest);
         radioMQTT=(RadioButton) findViewById(R.id.radioMQTT);
 
         checkBoxVibrate=(CheckBox)findViewById(R.id.checkBoxVibrate);
         checkBoxAlert=(CheckBox)findViewById(R.id.checkBoxAlert);
         checkBoxRing=(CheckBox)findViewById(R.id.checkBoxRing);
-        checkBoxPhoto=(CheckBox)findViewById(R.id.checkBoxPhoto);
+        //checkBoxPhoto=(CheckBox)findViewById(R.id.checkBoxPhoto);
         spinnerFrequency=(Spinner) findViewById(R.id.spinnerFrequency);
+
 
         Bundle b = getIntent().getExtras();
         if (b!=null ){
@@ -244,12 +247,14 @@ public class ActuatorsMainActivity extends Activity  {
             b.putString("username", nameEditText.getText().toString());
             b.putString("password", passwordEditText.getText().toString());
             b.putString("suburl", URLeditText.getText().toString());
+            b.putString("channel", channelEditText.getText().toString());
             b.putString("method",radioMethod);
 
             b.putBoolean("vibrate",checkBoxVibrate.isChecked());
             b.putBoolean("alert",checkBoxAlert.isChecked());
             b.putBoolean("ring",checkBoxRing.isChecked());
-            b.putBoolean("photo",checkBoxPhoto.isChecked());
+            //b.putBoolean("photo",checkBoxPhoto.isChecked());
+            b.putBoolean("photo",false);
             b.putString("frequency",spinnerFrequency.getSelectedItem().toString());
 
             i.putExtras(b); //Put your id to your next Intent

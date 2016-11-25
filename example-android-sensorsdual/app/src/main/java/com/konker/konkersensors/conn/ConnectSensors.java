@@ -12,7 +12,7 @@ import com.konker.konkersensors.conn.ErrorCollector.ErrorObject;
 import com.konker.konkersensors.exceptions.failedProcedureException;
 import com.konker.konkersensors.pubsub.IPosterGuy;
 import com.konker.konkersensors.pubsub.IPublishingListener;
-import com.konker.konkersensors.pubsub.MqttPubSubGuy;
+import com.konker.konkersensors.pubsub.MqttPubGuy;
 import com.konker.konkersensors.pubsub.RestPubSubGuy;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -202,7 +202,7 @@ public class ConnectSensors {
 
 
                 sensorName=sensorName.replaceAll("[^a-zA-Z]|\\s+", "");
-                MqttPubSubGuy mqttPoster= new MqttPubSubGuy("pub/" + sensorObj.connection.username+ "/"+ sensorName, json.toString(),client, conOpt);
+                MqttPubGuy mqttPoster= new MqttPubGuy("pub/" + sensorObj.connection.username+ "/"+ sensorName, json.toString(),client, conOpt);
                 pubSubManager.scheduleJobExecution(sensorName, mqttPoster);
             }
 

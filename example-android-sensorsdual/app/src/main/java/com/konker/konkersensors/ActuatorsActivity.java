@@ -28,6 +28,7 @@ public class ActuatorsActivity extends Activity  {
     String extraUsername;
     String extraPassword;
     String extraURL;
+    String channel;
     Boolean dataBackground=false;
     String method;
     ConnectActuators postSender;
@@ -76,6 +77,7 @@ public class ActuatorsActivity extends Activity  {
         extraUsername=b.getString("username");
         extraPassword=b.getString("password");
         extraURL =b.getString("suburl");
+        channel =b.getString("channel");
         dataBackground=b.getBoolean("dataBackground");
         vibrate=b.getBoolean("vibrate");
         alert=b.getBoolean("alert");
@@ -94,6 +96,7 @@ public class ActuatorsActivity extends Activity  {
         actuatorObj.connection.username=this.username;
         actuatorObj.connection.password=this.password;
         actuatorObj.connection.url =this.url;
+        actuatorObj.connection.channel =this.channel;
         actuatorObj.connection.transmitMethod=this.method;
 
         actuatorObj.screenObjects.backButton=backButton;

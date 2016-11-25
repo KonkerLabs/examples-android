@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Konkersensors.iml" filepath="$PROJECT_DIR$/Konkersensors.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example-android-sensorsdual.iml" filepath="$PROJECT_DIR$/example-android-sensorsdual.iml" />
     </modules>
   </component>
 </project>

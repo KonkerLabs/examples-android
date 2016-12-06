@@ -1,8 +1,12 @@
 # Konkerlabs
-[Português![Português](https://github.com/KonkerLabs/icons/blob/master/Arazil.png)](LEIAME.md)
+[PortuguÃªs![PortuguÃªs](https://github.com/KonkerLabs/icons/blob/master/Arazil.png)](LEIAME.md)
 [English![English](https://github.com/KonkerLabs/icons/blob/master/American.jpg)](README.md)
 ## example-android-sensorsdual 
 This android application colects the mobile sensors data and publish at Konker platform.
+
+Download the compiled APK
+https://github.com/KonkerLabs/examples-android/raw/master/example-android-sensorsdual/app/app-debug.apk
+
 ## Getting Started
 
 These instructions will guide you to get a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -57,7 +61,7 @@ Inside this file, you'll find the variable __**versionName**__,  there you will 
 
 ## Authors
 
-* **Érico Netto** - *Initial work* - [Érico Netto](https://github.com/ericonetto)
+* **Ã‰rico Netto** - *Initial work* - [Ã‰rico Netto](https://github.com/ericonetto)
 
 See also the list of [contributors](https://github.com/orgs/KonkerLabs/people) who participated in this project.
 ## License

@@ -8,6 +8,8 @@
     <string name="menu_get_dtc">Obter DTC</string>
     <string name="menu_item_trip_delete">Apagar</string>
     <string name="menu_settings">Configura&#231;&#245;es</string>
+    <string name="menu_config_konker_device">Configurar como dispositivo Konker</string>
+
     <string name="menu_start_live_data">Iniciar monitoramento em tempo real</string>
     <string name="menu_stop_live_data">Parar monitoramento em tempo real</string>
     <string name="menu_trip_list">Viagens</string>
@@ -58,11 +60,20 @@
     <string name="pref_reader_config_summary">Comandos para configurar o leitor bluetooth, separados por nova linha</string>
     <string name="pref_reader_config_title">Configura&#231;&#227;o de comandos de leitura</string>
     <string name="pref_upload_category_title">Envio de dados</string>
-    <string name="pref_upload_summaryOff">Habilitar envio de dados http</string>
-    <string name="pref_upload_summaryOn">Desabilitar envio de dados http</string>
+    <string name="pref_upload_summaryOff">Habilitar envio de dados</string>
+    <string name="pref_upload_summaryOn">Desabilitar envio de dados</string>
     <string name="pref_upload_title">Habilitar envio de dados</string>
     <string name="pref_upload_url_summary">URL POST que ir&#225; receber os dados em tempo real</string>
     <string name="pref_upload_url_title">URL de upload</string>
+
+    <string name="pref_method_title">M&#233;todo de envio</string>
+    <string name="pref_upload_method_summary">REST</string>
+    <string name="pref_upload_username_title">Usu&#225;rio</string>
+    <string name="pref_upload_username_summary"></string>
+    <string name="pref_upload_password_title">Senha</string>
+    <string name="pref_upload_password_summary"></string>
+
+
     <string name="pref_vehicle_id_summary">Identificador &#250;nico opcional deste ve&#237;culo, utilizado para enviar os dados</string>
     <string name="pref_vehicle_id_title">ID do ve&#237;culo</string>
     <string name="pref_volumetric_efficiency_dialog_title">Efici&#234;ncia Volum&#233;trica (ex. 0.85)</string>

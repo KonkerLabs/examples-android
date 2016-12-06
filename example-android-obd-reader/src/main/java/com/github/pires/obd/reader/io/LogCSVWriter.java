@@ -86,7 +86,7 @@ public class LogCSVWriter {
                     reading.getVin() + ";";
 
 
-            Map<String, String> read = reading.getReadings();
+            Map<String, Object> read = reading.getReadings();
 
             for (String ccln : NAMES_COLUMNS_ONLY_READINGS) {
                 crl += read.get(ccln) + ";";

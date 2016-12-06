@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -27,14 +28,28 @@ import com.github.pires.obd.reader.config.ObdConfig;
 import java.util.ArrayList;
 import java.util.Set;
 
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.qrcode_data.QrcodeItems;
+import com.qrcode_data.qrcodeObject;
+
 /**
  * Configuration com.github.pires.obd.reader.activity.
  */
 public class ConfigActivity extends PreferenceActivity implements OnPreferenceChangeListener {
 
     public static final String BLUETOOTH_LIST_KEY = "bluetooth_list_preference";
-    public static final String UPLOAD_URL_KEY = "upload_url_preference";
     public static final String UPLOAD_DATA_KEY = "upload_data_preference";
+
+    public static final String UPLOAD_URL_KEY = "upload_url_preference";
+    public static final String TRANSMIT_METHOD_KEY = "transmit_method";
+    public static final String USERNAME_KEY = "user_preference";
+    public static final String PASSWORD_KEY = "password_preference";
+
+
     public static final String OBD_UPDATE_PERIOD_KEY = "obd_update_period_preference";
     public static final String VEHICLE_ID_KEY = "vehicle_id_preference";
     public static final String ENGINE_DISPLACEMENT_KEY = "engine_displacement_preference";
@@ -51,6 +66,15 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
     public static final String ENABLE_FULL_LOGGING_KEY = "enable_full_logging";
     public static final String DIRECTORY_FULL_LOGGING_KEY = "dirname_full_logging";
     public static final String DEV_EMAIL_KEY = "dev_email";
+    String userName;
+    String password;
+    String url;
+    String radioMethod;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     /**
      * @param prefs
@@ -188,13 +212,127 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
     }
 
 
+    private void getPreferencesValues(String qrcode) {
+        SharedPreferences mPrefs = getSharedPreferences("label", 0);
+
+        if (qrcode == null) {
+            qrcode = mPrefs.getString("endpointsJSON", null);
+            qrcodeObject.userUrl = mPrefs.getString("puburl", null);
+        } else {
+            qrcodeObject.userUrl = null;
+        }
+
+        if (qrcode != null) {
+            qrcodeObject.getJSONData(qrcode);
+            userName = qrcodeObject.username;
+            password = qrcodeObject.password;
+            radioMethod = mPrefs.getString("method", null);
+            radioMethod = radioMethod == null ? getResources().getString(R.string.app_method) : radioMethod;
+
+
+            if (radioMethod.equals("0")) {
+                url = qrcodeObject.userUrl == null ? qrcodeObject.urlPubHTTP : qrcodeObject.userUrl;
+            } else {
+                url = qrcodeObject.userUrl == null ? qrcodeObject.urlPubMQTT : qrcodeObject.userUrl;
+            }
+
+        } else {
+            setDefaults();
+        }
+
+    }
+
+    public void setDefaults() {
+        SharedPreferences mPrefs = getSharedPreferences("label", 0);
+
+        userName = getResources().getString(R.string.app_username);
+        password = getResources().getString(R.string.app_password);
+        radioMethod = radioMethod == null ? getResources().getString(R.string.app_method) : radioMethod;
+
+        if (radioMethod.equals("0")) {
+            url = mPrefs.getString("puburl", null) == null ? getResources().getString(R.string.app_urlPubHTTP) : mPrefs.getString("puburl", null);
+        } else {
+            url = mPrefs.getString("puburl", null) == null ? getResources().getString(R.string.app_urlPubMQTT) : mPrefs.getString("puburl", null);
+        }
+    }
+
+    private void savePreferences() {
+        SharedPreferences mPrefs = getSharedPreferences("label", 0);
+        SharedPreferences.Editor mEditor = mPrefs.edit();
+
+        ListPreference preferenceMethod = (ListPreference) getPreferenceScreen().findPreference(TRANSMIT_METHOD_KEY);
+        EditTextPreference preferenceURL = (EditTextPreference) getPreferenceScreen().findPreference(UPLOAD_URL_KEY);
+        EditTextPreference preferenceUser = (EditTextPreference) getPreferenceScreen().findPreference(USERNAME_KEY);
+        EditTextPreference preferencePassword = (EditTextPreference) getPreferenceScreen().findPreference(PASSWORD_KEY);
+
+        mEditor.putString("username", preferenceUser.getText().toString()).commit();
+        qrcodeObject.updateJSONData(QrcodeItems.user, preferenceUser.getText().toString());
+
+        mEditor.putString("password", preferencePassword.getText().toString()).commit();
+        qrcodeObject.updateJSONData(QrcodeItems.pass, preferencePassword.getText().toString());
+
+        mEditor.putString("puburl", preferenceURL.getText().toString()).commit();
+        qrcodeObject.userUrl = preferenceURL.getText().toString();
+
+        mEditor.putString("method", preferenceMethod.getValue().toString()).commit();
+        radioMethod = preferenceMethod.getValue().toString();
+
+
+        mEditor.putString("endpointsJSON", qrcodeObject.jsonString).commit();
+
+
+        //mEditor.putString("method", radioMethod).commit();
+
+    }
+
+
+    public void onPause() {
+        super.onPause();  // Always call the superclass method first
+        savePreferences();
+    }
+
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.preferences);
+
+        CheckBoxPreference uploadOption = (CheckBoxPreference) getPreferenceScreen().findPreference(UPLOAD_DATA_KEY);
+
+        Bundle b = getIntent().getExtras();
+        if (b != null) {
+            String qrcode = b.getString("qrcode");
+            uploadOption.setChecked(true);
+            getPreferencesValues(qrcode);
+        } else {
+            getPreferencesValues(null);
+        }
+
+
+        ListPreference preferenceMethod = (ListPreference) getPreferenceScreen().findPreference(TRANSMIT_METHOD_KEY);
+        EditTextPreference preferenceURL = (EditTextPreference) getPreferenceScreen().findPreference(UPLOAD_URL_KEY);
+        EditTextPreference preferenceUser = (EditTextPreference) getPreferenceScreen().findPreference(USERNAME_KEY);
+        EditTextPreference preferencePassword = (EditTextPreference) getPreferenceScreen().findPreference(PASSWORD_KEY);
+
+        preferenceURL.setText(url);
+        preferenceURL.setSummary(url);
+        preferenceUser.setText(userName);
+        preferenceUser.setSummary(userName);
+        preferencePassword.setText(password);
+        preferencePassword.setSummary(password);
+
+        if (radioMethod.equals("0")) {
+            preferenceMethod.setValueIndex(0);
+            preferenceMethod.setSummary("REST");
+        } else {
+            preferenceMethod.setValueIndex(1);
+            preferenceMethod.setSummary("MQTT");
+        }
+
 
     /*
      * Read preferences resources available at res/xml/preferences.xml
      */
-        addPreferencesFromResource(R.xml.preferences);
+
 
         checkGps();
 
@@ -207,6 +345,13 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
                 .findPreference(PROTOCOLS_LIST_KEY);
         String[] prefKeys = new String[]{ENGINE_DISPLACEMENT_KEY,
                 VOLUMETRIC_EFFICIENCY_KEY, OBD_UPDATE_PERIOD_KEY, MAX_FUEL_ECON_KEY};
+
+
+        preferenceMethod.setOnPreferenceChangeListener(this);
+        preferenceURL.setOnPreferenceChangeListener(this);
+        preferenceUser.setOnPreferenceChangeListener(this);
+        preferencePassword.setOnPreferenceChangeListener(this);
+
         for (String prefKey : prefKeys) {
             EditTextPreference txtPref = (EditTextPreference) getPreferenceScreen()
                     .findPreference(prefKey);
@@ -289,6 +434,9 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
         }
         listBtDevices.setEntries(pairedDeviceStrings.toArray(new CharSequence[0]));
         listBtDevices.setEntryValues(vals.toArray(new CharSequence[0]));
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     /**
@@ -315,6 +463,51 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
                         Toast.LENGTH_LONG).show();
             }
         }
+
+
+        ListPreference preferenceMethod = (ListPreference) getPreferenceScreen().findPreference(TRANSMIT_METHOD_KEY);
+        EditTextPreference preferenceURL = (EditTextPreference) getPreferenceScreen().findPreference(UPLOAD_URL_KEY);
+        EditTextPreference preferenceUser = (EditTextPreference) getPreferenceScreen().findPreference(USERNAME_KEY);
+        EditTextPreference preferencePassword = (EditTextPreference) getPreferenceScreen().findPreference(PASSWORD_KEY);
+
+
+        if (UPLOAD_URL_KEY.equals(preference.getKey())) {
+            preferenceURL.setSummary((String) newValue);
+
+        }
+
+        if (USERNAME_KEY.equals(preference.getKey())) {
+            preferenceUser.setSummary((String) newValue);
+        }
+
+
+        if (PASSWORD_KEY.equals(preference.getKey())) {
+            preferencePassword.setSummary((String) newValue);
+        }
+
+
+        if (TRANSMIT_METHOD_KEY.equals(preference.getKey())) {
+            if (newValue.equals("0")) {
+                preferenceMethod.setSummary("REST");
+                preferenceMethod.setValueIndex(0);
+                url = qrcodeObject.urlPubHTTP;
+            } else {
+                //TODO, CREATE A PROCEDURE TO SEND BY MQTT
+                //TODO, REMOVE THIS CODE BELOW
+                Context context = getApplicationContext();
+                CharSequence text = "NOT YET IMPLEMENTED!";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+                //TODO, UNCOMMENT THIS CODE BELOW
+                //preferenceMethod.setSummary("MQTT");
+                ///preferenceMethod.setValueIndex(1);
+                //url = qrcodeObject.urlPubMQTT;
+            }
+        }
+
+        preferenceURL.setSummary(url);
         return false;
     }
 
@@ -335,5 +528,41 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
             preferenceCategory.removeAll();
             preferenceScreen.removePreference((Preference) preferenceCategory);
         }
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Config Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }

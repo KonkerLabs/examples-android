@@ -20,6 +20,8 @@
     <string name="menu_start_live_data">开启实时数据</string>
     <string name="menu_stop_live_data">停止实时数据</string>
     <string name="menu_settings">设置</string>
+    <string name="menu_config_konker_device">配置为Konker的设备</string>
+
     <string name="menu_get_dtc">获取 DTC 信息</string>
     <string name="text_bluetooth" translatable="false">蓝牙</string>
     <string name="text_orientation_default" translatable="false">北</string>

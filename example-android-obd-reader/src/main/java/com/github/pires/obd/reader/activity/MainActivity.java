@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -55,6 +56,7 @@ import com.github.pires.obd.reader.net.ObdService;
 import com.github.pires.obd.reader.trips.TripLog;
 import com.github.pires.obd.reader.trips.TripRecord;
 import com.google.inject.Inject;
+import com.qrcode_activities.MainBarActivity;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -64,6 +66,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -86,6 +89,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     private static final int START_LIVE_DATA = 2;
     private static final int STOP_LIVE_DATA = 3;
     private static final int SETTINGS = 4;
+    private static final int KONKERDEVICE = 6;
+
     private static final int GET_DTC = 5;
     private static final int TABLE_ROW_MARGIN = 7;
     private static final int NO_ORIENTATION_SENSOR = 8;
@@ -99,7 +104,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         RoboGuice.setUseAnnotationDatabases(false);
     }
 
-    public Map<String, String> commandResult = new HashMap<String, String>();
+    public Map<String, Object> commandResult = new HashMap<String, Object>();
     boolean mGpsIsStarted = false;
     private LocationManager mLocService;
     private LocationProvider mLocProvider;
@@ -184,7 +189,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
                 if (prefs.getBoolean(ConfigActivity.UPLOAD_DATA_KEY, false)) {
                     // Upload the current reading by http
                     final String vin = prefs.getString(ConfigActivity.VEHICLE_ID_KEY, "UNDEFINED_VIN");
-                    Map<String, String> temp = new HashMap<String, String>();
+                    Map<String, Object> temp = new HashMap<String, Object>();
                     temp.putAll(commandResult);
                     ObdReading reading = new ObdReading(lat, lon, alt, System.currentTimeMillis(), vin, temp);
                     new UploadAsyncTask().execute(reading);
@@ -192,7 +197,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
                 } else if (prefs.getBoolean(ConfigActivity.ENABLE_FULL_LOGGING_KEY, false)) {
                     // Write the current reading to CSV
                     final String vin = prefs.getString(ConfigActivity.VEHICLE_ID_KEY, "UNDEFINED_VIN");
-                    Map<String, String> temp = new HashMap<String, String>();
+                    Map<String, Object> temp = new HashMap<String, Object>();
                     temp.putAll(commandResult);
                     ObdReading reading = new ObdReading(lat, lon, alt, System.currentTimeMillis(), vin, temp);
                     if(reading != null) myCSVWriter.writeLineCSV(reading);
@@ -271,7 +276,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         } else if (job.getState().equals(ObdCommandJob.ObdCommandJobState.NOT_SUPPORTED)) {
             cmdResult = getString(R.string.status_obd_no_support);
         } else {
-            cmdResult = job.getCommand().getFormattedResult();
+            cmdResult = job.getCommand().getCalculatedResult();
             if(isServiceBound)
                 obdStatusTextView.setText(getString(R.string.status_obd_data));
         }
@@ -413,12 +418,24 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         startActivity(new Intent(this, ConfigActivity.class));
     }
 
+
+    private void configKonkerDevice() {
+        startActivity(new Intent(this, MainBarActivity.class));
+    }
+
+
+
+
+
+
+
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, START_LIVE_DATA, 0, getString(R.string.menu_start_live_data));
         menu.add(0, STOP_LIVE_DATA, 0, getString(R.string.menu_stop_live_data));
         menu.add(0, GET_DTC, 0, getString(R.string.menu_get_dtc));
         menu.add(0, TRIPS_LIST, 0, getString(R.string.menu_trip_list));
         menu.add(0, SETTINGS, 0, getString(R.string.menu_settings));
+        menu.add(0, KONKERDEVICE, 0, getString(R.string.menu_config_konker_device));
         return true;
     }
 
@@ -432,6 +449,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
                 return true;
             case SETTINGS:
                 updateConfig();
+                return true;
+            case KONKERDEVICE:
+                configKonkerDevice();
                 return true;
             case GET_DTC:
                 getTroubleCodes();
@@ -555,6 +575,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         MenuItem startItem = menu.findItem(START_LIVE_DATA);
         MenuItem stopItem = menu.findItem(STOP_LIVE_DATA);
         MenuItem settingsItem = menu.findItem(SETTINGS);
+        MenuItem konkerdeviceItem = menu.findItem(KONKERDEVICE);
+
         MenuItem getDTCItem = menu.findItem(GET_DTC);
 
         if (service != null && service.isRunning()) {
@@ -562,11 +584,13 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
             startItem.setEnabled(false);
             stopItem.setEnabled(true);
             settingsItem.setEnabled(false);
+            konkerdeviceItem.setEnabled(false);
         } else {
             getDTCItem.setEnabled(true);
             stopItem.setEnabled(false);
             startItem.setEnabled(true);
             settingsItem.setEnabled(true);
+            konkerdeviceItem.setEnabled(true);
         }
 
         return true;
@@ -702,22 +726,47 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         protected Void doInBackground(ObdReading... readings) {
             Log.d(TAG, "Uploading " + readings.length + " readings..");
             // instantiate reading service client
+            final String method = prefs.getString(ConfigActivity.TRANSMIT_METHOD_KEY, "");
             final String endpoint = prefs.getString(ConfigActivity.UPLOAD_URL_KEY, "");
-            RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint(endpoint)
-                    .build();
-            ObdService service = restAdapter.create(ObdService.class);
-            // upload readings
-            for (ObdReading reading : readings) {
-                try {
-                    Response response = service.uploadReading(reading);
-                    assert response.getStatus() == 200;
-                } catch (RetrofitError re) {
-                    Log.e(TAG, re.toString());
+            final String username = prefs.getString(ConfigActivity.USERNAME_KEY, "");
+            final String userpass = prefs.getString(ConfigActivity.PASSWORD_KEY, "");
+
+
+            //encode username and password
+            final String userpassStr = username + ":" + userpass;
+            final String base64userpass = Base64.encodeToString(userpassStr.getBytes(), Base64.DEFAULT);
+
+            RequestInterceptor interceptor = new RequestInterceptor() {
+                @Override
+                public void intercept(RequestFacade request) {
+                    request.addHeader("Authorization", "Basic " + base64userpass);
+                    request.addHeader("Content-Type", "application/json");
                 }
+            };
+
+            if (method.equals("0")){
+
+                RestAdapter restAdapter = new RestAdapter.Builder()
+                        .setEndpoint(endpoint +"/carro")
+                        .setRequestInterceptor(interceptor)
+                        .build();
+                ObdService service = restAdapter.create(ObdService.class);
+                // upload readings
+                for (ObdReading reading : readings) {
+                    try {
+                        Response response = service.uploadReading(reading);
+                        assert response.getStatus() == 200;
+                    } catch (RetrofitError re) {
+                        Log.e(TAG, re.toString());
+                    }
+
+                }
+                Log.d(TAG, "REST Done");
+            }else{
 
             }
-            Log.d(TAG, "Done");
+
+
             return null;
         }
 

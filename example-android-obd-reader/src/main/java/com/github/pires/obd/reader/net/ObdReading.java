@@ -23,14 +23,14 @@ public class ObdReading {
     private double latitude, longitude, altitude;
     private long timestamp;
     private String vehicleid; // vehicle id
-    private Map<String, String> readings;
+    private Map<String, Object> readings;
 
     public ObdReading() {
         readings = new HashMap<>();
     }
 
     public ObdReading(double latitude, double longitude, double altitude, long timestamp,
-                      String vehicleid, Map<String, String> readings) {
+                      String vehicleid, Map<String, Object> readings) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.altitude = altitude;
@@ -79,11 +79,11 @@ public class ObdReading {
         this.vehicleid = vehicleid;
     }
 
-    public Map<String, String> getReadings() {
+    public Map<String, Object> getReadings() {
         return readings;
     }
 
-    public void setReadings(Map<String, String> readings) {
+    public void setReadings(Map<String, Object> readings) {
         this.readings = readings;
     }
 

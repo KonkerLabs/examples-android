@@ -10,12 +10,38 @@
             android:summaryOff="@string/pref_upload_summaryOff"
             android:summaryOn="@string/pref_upload_summaryOn"
             android:title="@string/pref_upload_title" />
+        <ListPreference
+            android:defaultValue="@string/app_method"
+            android:title="@string/pref_method_title"
+            android:entries="@array/transmit_methods"
+            android:entryValues="@array/transmit_vals"
+            android:id="@+id/transmit_method"
+            android:summary="@string/pref_upload_method_summary"
+            android:key="transmit_method" />
         <EditTextPreference
-            android:defaultValue="http://www.example.com/obd/get_data.php"
+            android:defaultValue="@string/app_urlPubHTTP"
             android:dialogTitle="@string/pref_upload_url_title"
             android:key="upload_url_preference"
+            android:id="@+id/upload_url_preference"
             android:summary="@string/pref_upload_url_summary"
-            android:title="@string/pref_upload_url_title" />
+            android:title="@string/pref_upload_url_title"
+            android:singleLine="false" />
+        <EditTextPreference
+            android:defaultValue="@string/app_username"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/pref_upload_username_title"
+            android:summary="@string/pref_upload_username_summary"
+            android:id="@+id/user_preference"
+            android:key="user_preference" />
+        <EditTextPreference
+            android:defaultValue="@string/app_password"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/pref_upload_password_title"
+            android:id="@+id/password_preference"
+            android:summary="@string/pref_upload_password_summary"
+            android:key="password_preference" />
         <EditTextPreference
             android:defaultValue=""
             android:dialogTitle="@string/pref_vehicle_id_title"

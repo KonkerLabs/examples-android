@@ -1,5 +1,6 @@
 package com.github.pires.obd.reader.activity;
 
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;

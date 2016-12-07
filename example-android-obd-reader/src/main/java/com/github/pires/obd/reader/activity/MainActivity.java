@@ -268,7 +268,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         if (job.getState().equals(ObdCommandJob.ObdCommandJobState.EXECUTION_ERROR)) {
             cmdResult = job.getCommand().getResult();
             if (cmdResult != null && isServiceBound) {
-                obdStatusTextView.setText(cmdResult.toLowerCase());
+                obdStatusTextView.setText(cmdResult.toString().toLowerCase());
             }
         } else if (job.getState().equals(ObdCommandJob.ObdCommandJobState.BROKEN_PIPE)) {
             if (isServiceBound)
@@ -283,9 +283,13 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
         if (vv.findViewWithTag(cmdID) != null) {
             TextView existingTV = (TextView) vv.findViewWithTag(cmdID);
-            existingTV.setText(cmdResult);
-        } else addTableRow(cmdID, cmdName, cmdResult);
-        commandResult.put(cmdID, cmdResult);
+            existingTV.setText(cmdResult.toString());
+        } else addTableRow(cmdID, cmdName, cmdResult.toString());
+        try{
+            commandResult.put(cmdID,Double.parseDouble(cmdResult));
+        }catch (java.lang.NumberFormatException e){
+            commandResult.put(cmdID,cmdResult);
+        }
         updateTripStatistic(job, cmdID);
     }
 

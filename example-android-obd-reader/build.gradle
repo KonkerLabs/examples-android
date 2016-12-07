@@ -26,6 +26,8 @@ android {
         minSdkVersion 14
         targetSdkVersion 21
         applicationId 'com.github.pires.obd.reader'
+        // Enabling multidex support.
+        multiDexEnabled true
     }
 
     lintOptions {
@@ -37,6 +39,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
     }
 }
 

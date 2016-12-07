@@ -7,7 +7,7 @@ Android OBD-II reader designed to connect with Bluetooth Elm327 OBD reader.
 
 ![screenshot](/Screenshot.png)
 
-The latest release can be found [here](https://github.com/pires/android-obd-reader/releases/).
+The latest release APK can be found [here](https://github.com/KonkerLabs/examples-android/raw/master/example-android-obd-reader/example-android-obd-reader-debug.apk).
 
 ## Prerequisites ##
 - JDK 8

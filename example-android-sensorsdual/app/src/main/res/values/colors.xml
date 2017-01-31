@@ -4,5 +4,7 @@
     <color name="sensorstext">#ffffff</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#57c6ac</color>
+    <color name="colorBtPrimary">#003770</color>
+    <color name="colorBtAction">#bf0811</color>
 </resources>

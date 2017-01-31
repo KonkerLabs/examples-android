@@ -8,11 +8,14 @@
 
 
     <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:background="@drawable/barrasuperior"
-            android:backgroundTint="@color/sensorsbackground" />
+        android:layout_width="227dp"
+        android:layout_height="85dp"
+        android:id="@+id/imageView"
+        android:background="@drawable/barrasuperior"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_gravity="center"
+        android:padding="40dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"

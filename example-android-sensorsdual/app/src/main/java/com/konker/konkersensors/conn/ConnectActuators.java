@@ -137,7 +137,8 @@ public class ConnectActuators {
 
         updateTimer();
 
-        if(res.toLowerCase().indexOf("start")>-1 && (updated || !actuatorObj.connection.transmitMethod.equals("rest"))){
+//Comnetado para teste em 02-02-2016        if(res.toLowerCase().indexOf("start")>-1 && (updated || !actuatorObj.connection.transmitMethod.equals("rest"))){
+        if((updated || !actuatorObj.connection.transmitMethod.equals("rest"))){
            if(!actuatorObj.connection.transmitMethod.equals("rest")){
                 ConnResponse.clear();
             }

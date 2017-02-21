@@ -38,7 +38,7 @@
             android:name=".SensorsMainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance">
+            >
         </activity>
         <activity
             android:name=".ActuatorsMainActivity"
@@ -49,8 +49,7 @@
         <activity
             android:name=".ActuatorsActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance">
+            >
         </activity>
         <activity
             android:name=".MainBarActivity"

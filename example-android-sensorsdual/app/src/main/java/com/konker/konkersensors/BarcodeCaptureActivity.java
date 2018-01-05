@@ -50,6 +50,7 @@ import com.google.android.gms.samples.vision.barcodereader.ui.camera.GraphicOver
 import com.google.android.gms.vision.MultiProcessor;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.IOException;
 
@@ -79,12 +80,20 @@ public final class BarcodeCaptureActivity extends AppCompatActivity {
     // helper objects for detecting taps and pinches.
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
-
+    private FirebaseAnalytics mFirebaseAnalytics;
     /**
      * Initializes the UI and creates the detector pipeline.
      */
     @Override
     public void onCreate(Bundle icicle) {
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        //Bundle bundle = new Bundle();
+        //bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "BarcodeCaptureActivity");
+        //bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "activity");
+        //mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+
         super.onCreate(icicle);
         setContentView(R.layout.barcode_capture);
 
@@ -110,7 +119,6 @@ public final class BarcodeCaptureActivity extends AppCompatActivity {
         Snackbar.make(mGraphicOverlay, "Tap to capture. Pinch/Stretch to zoom",
                 Snackbar.LENGTH_LONG)
                 .show();
-
 
     }
 

@@ -17,16 +17,27 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 
 public class MainActivity extends Activity  {
     Button sensorColectorButton;
     Button actuatorButton;
-
+    private FirebaseAnalytics mFirebaseAnalytics;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        //Bundle bundle = new Bundle();
+        //bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "MainActivity");
+        //bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "activity");
+        //mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
     /* create a full screen window */
@@ -86,7 +97,13 @@ public class MainActivity extends Activity  {
     private View.OnClickListener sensorColectorButtonOnClickListener= new View.OnClickListener() {
         public void onClick(View v) {
 
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "sensorColectorButton");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             Intent i = new Intent(getApplicationContext(),SensorsMainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
 
         }
@@ -96,8 +113,15 @@ public class MainActivity extends Activity  {
     private View.OnClickListener actuatorButtonOnClickListener= new View.OnClickListener() {
         public void onClick(View v) {
 
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "actuatorButton");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             Intent i = new Intent(getApplicationContext(),ActuatorsMainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
+
 
         }
     };

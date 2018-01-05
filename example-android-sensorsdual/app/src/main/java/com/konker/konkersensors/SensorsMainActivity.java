@@ -22,6 +22,7 @@ import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.konker.konkersensors.jsondata.QrcodeItems;
 import com.konker.konkersensors.jsondata.qrcodeObject;
 
@@ -30,7 +31,7 @@ public class SensorsMainActivity extends Activity  {
     EditText passwordEditText;
     Switch backgroundSwitch;
     EditText URLeditText;
-    Button loginButton;
+    Button startButton;
     Boolean nameEdited=false;
     Boolean passwordEdited=false;
     String userName;
@@ -47,11 +48,22 @@ public class SensorsMainActivity extends Activity  {
     RadioButton radioMQTT;
     String radioMethod;
     Button buttonGetQR;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        //Bundle bundle = new Bundle();
+        //bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "SensorsMainActivity");
+        //bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "activity");
+        //mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+
+
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
     /* create a full screen window */
@@ -134,8 +146,8 @@ public class SensorsMainActivity extends Activity  {
         passwordEditText.setOnClickListener(passwordClickListener);
         passwordEditText.setText(password);
 
-        loginButton = (Button) findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(loginButtonClickListener);
+        startButton = (Button) findViewById(R.id.startButton);
+        startButton.setOnClickListener(startButtonClickListener);
 
         buttonGetQR = (Button) findViewById(R.id.buttonGetQR);
         buttonGetQR.setOnClickListener(buttonGetQRClickListener);
@@ -170,11 +182,17 @@ public class SensorsMainActivity extends Activity  {
 
 
 
+
     }
 
 
     private View.OnClickListener nameClickListener= new View.OnClickListener() {
         public void onClick(View v) {
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "nameField");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             if(nameEdited==false) {
                 nameEdited = true;
                 nameEditText.setText("");
@@ -186,6 +204,11 @@ public class SensorsMainActivity extends Activity  {
     //
     private View.OnClickListener passwordClickListener= new View.OnClickListener() {
         public void onClick(View v) {
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "passwordField");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             if(passwordEdited==false) {
                 passwordEdited = true;
                 passwordEditText.setText("");
@@ -205,6 +228,12 @@ public class SensorsMainActivity extends Activity  {
 
     private View.OnClickListener radioRestClickListener = new View.OnClickListener(){
         public void onClick(View v) {
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "radioRest");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+
             radioMQTT.setChecked(false);
             radioMethod="rest";
 
@@ -226,6 +255,11 @@ public class SensorsMainActivity extends Activity  {
 
     private View.OnClickListener radioMQTTClickListener = new View.OnClickListener(){
         public void onClick(View v) {
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "radioMQTT");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             radioRest.setChecked(false);
             radioMethod="mqtt";
 
@@ -258,8 +292,9 @@ public class SensorsMainActivity extends Activity  {
 
 
 
-    private View.OnClickListener loginButtonClickListener= new View.OnClickListener() {
+    private View.OnClickListener startButtonClickListener = new View.OnClickListener() {
         public void onClick(View v) {
+
 
             Intent i = new Intent(getApplicationContext(),SensorsActivity.class);
             Bundle b = new Bundle();
@@ -276,9 +311,17 @@ public class SensorsMainActivity extends Activity  {
             b.putString("method",radioMethod);
             i.putExtras(b); //Put your id to your next Intent
 
+
+            Bundle bundle;
+            bundle=b;
+            bundle.putString("password", "*****");
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "startButton");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+
             savePreferences();
-
-
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
 
 
@@ -289,12 +332,16 @@ public class SensorsMainActivity extends Activity  {
     private View.OnClickListener buttonGetQRClickListener= new View.OnClickListener() {
         public void onClick(View v) {
 
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "buttonGetQR");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             Intent i = new Intent(getApplicationContext(),MainBarActivity.class);
             Bundle b = new Bundle();
-            b.putString("returnactivity", "SensorsMain");
+            b.putString("returnActivityClassName", this.getClass().getEnclosingClass().getName().toString());
             i.putExtras(b); //Put your id to your next Intent
-
-
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
 
 
@@ -328,6 +375,11 @@ public class SensorsMainActivity extends Activity  {
 
         mEditor.putString("method", radioMethod).commit();
 
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "savePreferences");
+        bundle.putString("puburl", mPrefs.getString("puburl",null).toString());
+        bundle.putString("suburl", mPrefs.getString("suburl",null).toString());
+        mFirebaseAnalytics.logEvent("function", bundle);
     }
 
 
@@ -366,6 +418,13 @@ public class SensorsMainActivity extends Activity  {
         proximitySwitch.setChecked(mPrefs.getBoolean("proximitysensor", false));
         gyroscopeSwitch.setChecked(mPrefs.getBoolean("gyroscopesensor", false));
         gpsSwitch.setChecked(mPrefs.getBoolean("gpssensor", false));
+
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "getPreferencesValues");
+        bundle.putString("puburl", mPrefs.getString("puburl",null).toString());
+        bundle.putString("suburl", mPrefs.getString("suburl",null).toString());
+        mFirebaseAnalytics.logEvent("function", bundle);
 
     }
 

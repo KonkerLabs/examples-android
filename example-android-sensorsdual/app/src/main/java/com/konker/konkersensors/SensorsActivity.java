@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.konker.konkersensors.Location.AndroidLocation;
 import com.konker.konkersensors.SensorsObjects.SensorsObjects;
 import com.konker.konkersensors.conn.ConnectSensors;
@@ -50,10 +51,20 @@ public class SensorsActivity extends Activity implements SensorEventListener {
     TextView timerTextView;
     TextView debugViews[];
     AndroidLocation androidLocation;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        //Bundle bundle = new Bundle();
+        //bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "SensorsActivity");
+        //bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "activity");
+        //mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -161,6 +172,7 @@ public class SensorsActivity extends Activity implements SensorEventListener {
 
 
         postSender = new ConnectSensors(sensorObj);
+
 
     }
 
@@ -286,6 +298,7 @@ public void SetViews(){
             usermessageView.loadData(summary, "text/html; charset=utf-8", "utf-8");
 
             finish();
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
         }
     };

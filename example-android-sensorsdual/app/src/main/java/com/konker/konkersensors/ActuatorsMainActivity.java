@@ -354,8 +354,8 @@ public class ActuatorsMainActivity extends Activity  {
 
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "savePreferences");
-        bundle.putString("puburl", mPrefs.getString("puburl",null).toString());
-        bundle.putString("suburl", mPrefs.getString("suburl",null).toString());
+        bundle.putString("puburl", mPrefs.getString("puburl",null)==null ? "" : mPrefs.getString("puburl",null).toString());
+        bundle.putString("suburl", mPrefs.getString("suburl",null)==null ? "" : mPrefs.getString("suburl",null).toString());
         mFirebaseAnalytics.logEvent("function", bundle);
 
     }
@@ -390,7 +390,7 @@ public class ActuatorsMainActivity extends Activity  {
 
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "getPreferencesValues");
-        bundle.putString(FirebaseAnalytics.Param.VALUE, qrcode.replace(password, "*****"));
+        bundle.putString(FirebaseAnalytics.Param.VALUE, qrcode==null? "" : qrcode.replace(password, "*****"));
         mFirebaseAnalytics.logEvent("function", bundle);
 
     }

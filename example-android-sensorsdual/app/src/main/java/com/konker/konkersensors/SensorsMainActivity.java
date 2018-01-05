@@ -377,8 +377,8 @@ public class SensorsMainActivity extends Activity  {
 
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "savePreferences");
-        bundle.putString("puburl", mPrefs.getString("puburl",null).toString());
-        bundle.putString("suburl", mPrefs.getString("suburl",null).toString());
+        bundle.putString("puburl", mPrefs.getString("puburl",null)==null ? "" : mPrefs.getString("puburl",null).toString());
+        bundle.putString("suburl", mPrefs.getString("suburl",null)==null ? "" : mPrefs.getString("suburl",null).toString());
         mFirebaseAnalytics.logEvent("function", bundle);
     }
 
@@ -422,8 +422,8 @@ public class SensorsMainActivity extends Activity  {
 
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "getPreferencesValues");
-        bundle.putString("puburl", mPrefs.getString("puburl",null).toString());
-        bundle.putString("suburl", mPrefs.getString("suburl",null).toString());
+        bundle.putString("puburl", mPrefs.getString("puburl",null)==null ? "" : mPrefs.getString("puburl",null).toString());
+        bundle.putString("suburl", mPrefs.getString("suburl",null)==null ? "" : mPrefs.getString("suburl",null).toString());
         mFirebaseAnalytics.logEvent("function", bundle);
 
     }

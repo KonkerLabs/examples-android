@@ -28,6 +28,8 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.konker.konkersensors.jsondata.QrcodeItems;
 import com.konker.konkersensors.jsondata.qrcodeObject;
 
+import static com.konker.konkersensors.jsondata.JsonToBundle.jsonStringToBundle;
+
 
 public class ActuatorsMainActivity extends Activity  {
     EditText nameEditText;
@@ -312,7 +314,7 @@ public class ActuatorsMainActivity extends Activity  {
             Bundle bundle = new Bundle();
             bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "buttonGetQR");
             bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "click");
-            mFirebaseAnalytics.logEvent("function", bundle);
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
             Intent i = new Intent(getApplicationContext(),MainBarActivity.class);
             Bundle b = new Bundle();
@@ -354,8 +356,8 @@ public class ActuatorsMainActivity extends Activity  {
 
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "savePreferences");
-        bundle.putString("puburl", mPrefs.getString("puburl",null)==null ? "" : mPrefs.getString("puburl",null).toString());
-        bundle.putString("suburl", mPrefs.getString("suburl",null)==null ? "" : mPrefs.getString("suburl",null).toString());
+        bundle.putString("saved_puburl", mPrefs.getString("puburl",null)==null ? "" : mPrefs.getString("puburl",null).toString());
+        bundle.putString("saved_suburl", mPrefs.getString("suburl",null)==null ? "" : mPrefs.getString("suburl",null).toString());
         mFirebaseAnalytics.logEvent("function", bundle);
 
     }
@@ -388,9 +390,17 @@ public class ActuatorsMainActivity extends Activity  {
             setDefaults();
         }
 
+
+
         Bundle bundle = new Bundle();
+        if(qrcode!=null){
+            String maskedQRCODE=qrcode.replace(qrcodeObject.password,"*****");
+            bundle=jsonStringToBundle(maskedQRCODE.replace("-","_"));
+        }
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "getPreferencesValues");
-        bundle.putString(FirebaseAnalytics.Param.VALUE, qrcode==null? "" : qrcode.replace(password, "*****"));
+        bundle.putString("saved_puburl", mPrefs.getString("puburl",null)==null ? "" : mPrefs.getString("puburl",null).toString());
+        bundle.putString("saved_suburl", mPrefs.getString("suburl",null)==null ? "" : mPrefs.getString("suburl",null).toString());
+
         mFirebaseAnalytics.logEvent("function", bundle);
 
     }

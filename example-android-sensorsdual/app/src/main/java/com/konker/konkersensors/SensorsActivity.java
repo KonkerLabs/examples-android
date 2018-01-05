@@ -58,10 +58,10 @@ public class SensorsActivity extends Activity implements SensorEventListener {
     public void onCreate(Bundle savedInstanceState) {
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        //Bundle bundle = new Bundle();
-        //bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "SensorsActivity");
-        //bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "activity");
-        //mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "SensorsActivity");
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "activity");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
 
 

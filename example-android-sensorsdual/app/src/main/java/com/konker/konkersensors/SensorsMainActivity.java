@@ -25,6 +25,9 @@ import android.widget.TextView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.konker.konkersensors.jsondata.QrcodeItems;
 import com.konker.konkersensors.jsondata.qrcodeObject;
+import com.konker.konkersensors.jsondata.JsonToBundle;
+
+import static com.konker.konkersensors.jsondata.JsonToBundle.jsonStringToBundle;
 
 public class SensorsMainActivity extends Activity  {
     EditText nameEditText;
@@ -332,6 +335,8 @@ public class SensorsMainActivity extends Activity  {
     private View.OnClickListener buttonGetQRClickListener= new View.OnClickListener() {
         public void onClick(View v) {
 
+
+
             Bundle bundle = new Bundle();
             bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "buttonGetQR");
             bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "click");
@@ -377,8 +382,8 @@ public class SensorsMainActivity extends Activity  {
 
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "savePreferences");
-        bundle.putString("puburl", mPrefs.getString("puburl",null)==null ? "" : mPrefs.getString("puburl",null).toString());
-        bundle.putString("suburl", mPrefs.getString("suburl",null)==null ? "" : mPrefs.getString("suburl",null).toString());
+        bundle.putString("saved_puburl", mPrefs.getString("puburl",null)==null ? "" : mPrefs.getString("puburl",null).toString());
+        bundle.putString("saved_suburl", mPrefs.getString("suburl",null)==null ? "" : mPrefs.getString("suburl",null).toString());
         mFirebaseAnalytics.logEvent("function", bundle);
     }
 
@@ -421,11 +426,15 @@ public class SensorsMainActivity extends Activity  {
 
 
         Bundle bundle = new Bundle();
+        if(qrcode!=null){
+            String maskedQRCODE=qrcode.replace(qrcodeObject.password,"*****");
+            bundle=jsonStringToBundle(maskedQRCODE.replace("-","_"));
+        }
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "getPreferencesValues");
-        bundle.putString("puburl", mPrefs.getString("puburl",null)==null ? "" : mPrefs.getString("puburl",null).toString());
-        bundle.putString("suburl", mPrefs.getString("suburl",null)==null ? "" : mPrefs.getString("suburl",null).toString());
-        mFirebaseAnalytics.logEvent("function", bundle);
+        bundle.putString("saved_puburl", mPrefs.getString("puburl",null)==null ? "" : mPrefs.getString("puburl",null).toString());
+        bundle.putString("saved_suburl", mPrefs.getString("suburl",null)==null ? "" : mPrefs.getString("suburl",null).toString());
 
+        mFirebaseAnalytics.logEvent("function", bundle);
     }
 
 

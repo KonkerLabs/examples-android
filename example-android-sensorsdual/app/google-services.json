@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "922997324875",
+    "firebase_url": "https://example-android-sensorsdual.firebaseio.com",
+    "project_id": "example-android-sensorsdual",
+    "storage_bucket": "example-android-sensorsdual.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922997324875:android:d1f7b04e4012bd65",
+        "android_client_info": {
+          "package_name": "com.konker.konkersensors"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "922997324875-dk9pn3u5kb6pqf6qkjundl37m7mbsa1e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.konker.konkersensors",
+            "certificate_hash": "ba1d2c8ef93bc7f6a43b4c0e23fed4875a3a92dc"
+          }
+        },
+        {
+          "client_id": "922997324875-ag9nl6otsj8dfomplniem3n7op81hilg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA08r5pXsWeMY9qYxaEE1dcZKxaX9kHpis"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "922997324875-ag9nl6otsj8dfomplniem3n7op81hilg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

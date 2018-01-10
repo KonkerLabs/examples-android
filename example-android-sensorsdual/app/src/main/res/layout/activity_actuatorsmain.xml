@@ -184,7 +184,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/textView3"
 
-            android:layout_below="@+id/loginButton"
+            android:layout_below="@+id/startButton"
             android:layout_centerHorizontal="true"
             android:textColor="#c8c8c8" />
 
@@ -192,7 +192,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Start listening"
-            android:id="@+id/loginButton"
+            android:id="@+id/startButton"
             android:textAlignment="center"
             android:backgroundTint="#c42329"
             android:minWidth="250dp"

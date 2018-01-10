@@ -24,8 +24,11 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.konker.konkersensors.jsondata.QrcodeItems;
 import com.konker.konkersensors.jsondata.qrcodeObject;
+
+import static com.konker.konkersensors.jsondata.JsonToBundle.jsonStringToBundle;
 
 
 public class ActuatorsMainActivity extends Activity  {
@@ -50,10 +53,20 @@ public class ActuatorsMainActivity extends Activity  {
     CheckBox checkBoxRing;
     CheckBox checkBoxPhoto;
     Spinner spinnerFrequency;
-
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        //Bundle bundle = new Bundle();
+        //bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "ActuatorsMainActivity");
+        //bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "activity");
+        //mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+
+
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
     /* create a full screen window */
@@ -142,7 +155,7 @@ public class ActuatorsMainActivity extends Activity  {
         passwordEditText.setOnClickListener(passwordClickListener);
         passwordEditText.setText(password);
 
-        startButton = (Button) findViewById(R.id.loginButton);
+        startButton = (Button) findViewById(R.id.startButton);
         startButton.setOnClickListener(startButtonClickListener);
 
         buttonGetQR = (Button) findViewById(R.id.buttonGetQR);
@@ -168,15 +181,17 @@ public class ActuatorsMainActivity extends Activity  {
         iv_background.setImageBitmap(bmp);
 
 
-
-
-
     }
 
 
 
     private View.OnClickListener nameClickListener= new View.OnClickListener() {
         public void onClick(View v) {
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "nameField");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             if(nameEdited==false) {
                 nameEdited = true;
                 nameEditText.setText("");
@@ -189,6 +204,11 @@ public class ActuatorsMainActivity extends Activity  {
     private View.OnClickListener passwordClickListener= new View.OnClickListener() {
         public void onClick(View v) {
             if(passwordEdited==false) {
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "passwordField");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "click");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 passwordEdited = true;
                 passwordEditText.setText("");
             }
@@ -201,6 +221,11 @@ public class ActuatorsMainActivity extends Activity  {
         public void onClick(View v) {
             radioMQTT.setChecked(false);
             radioMethod="rest";
+
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "radioRest");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
             SharedPreferences mPrefs = getSharedPreferences("label", 0);
             if(!mPrefs.getString("method", "rest").equals("rest")){
@@ -222,6 +247,12 @@ public class ActuatorsMainActivity extends Activity  {
         public void onClick(View v) {
             radioRest.setChecked(false);
             radioMethod="mqtt";
+
+
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "radioMQTT");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
             SharedPreferences mPrefs = getSharedPreferences("label", 0);
             if(mPrefs.getString("method", "rest").equals("rest")){
@@ -259,10 +290,17 @@ public class ActuatorsMainActivity extends Activity  {
 
             i.putExtras(b); //Put your id to your next Intent
 
+            Bundle bundle;
+            bundle=b;
+            bundle.putString("password", "*****");
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "startButton");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
 
             savePreferences();
 
-
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
 
 
@@ -273,11 +311,16 @@ public class ActuatorsMainActivity extends Activity  {
     private View.OnClickListener buttonGetQRClickListener= new View.OnClickListener() {
         public void onClick(View v) {
 
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "buttonGetQR");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             Intent i = new Intent(getApplicationContext(),MainBarActivity.class);
             Bundle b = new Bundle();
-            b.putString("returnactivity", "ActuatorsMain");
+            b.putString("returnActivityClassName", this.getClass().getEnclosingClass().getName().toString());
             i.putExtras(b); //Put your id to your next Intent
-
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             startActivity(i);
 
@@ -290,6 +333,8 @@ public class ActuatorsMainActivity extends Activity  {
 
 
     private void savePreferences(){
+
+
         SharedPreferences mPrefs = getSharedPreferences("label", 0);
         SharedPreferences.Editor mEditor = mPrefs.edit();
 
@@ -309,10 +354,17 @@ public class ActuatorsMainActivity extends Activity  {
 
         mEditor.putString("method", radioMethod).commit();
 
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "savePreferences");
+        bundle.putString("saved_puburl", mPrefs.getString("puburl",null)==null ? "" : mPrefs.getString("puburl",null).toString());
+        bundle.putString("saved_suburl", mPrefs.getString("suburl",null)==null ? "" : mPrefs.getString("suburl",null).toString());
+        mFirebaseAnalytics.logEvent("function", bundle);
+
     }
 
 
     private void getPreferencesValues(String qrcode){
+
         SharedPreferences mPrefs = getSharedPreferences("label", 0);
         if(qrcode==null){
             qrcode=mPrefs.getString("endpointsJSON", null);
@@ -337,6 +389,19 @@ public class ActuatorsMainActivity extends Activity  {
         }else {
             setDefaults();
         }
+
+
+
+        Bundle bundle = new Bundle();
+        if(qrcode!=null){
+            String maskedQRCODE=qrcode.replace(qrcodeObject.password,"*****");
+            bundle=jsonStringToBundle(maskedQRCODE.replace("-","_"));
+        }
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "getPreferencesValues");
+        bundle.putString("saved_puburl", mPrefs.getString("puburl",null)==null ? "" : mPrefs.getString("puburl",null).toString());
+        bundle.putString("saved_suburl", mPrefs.getString("suburl",null)==null ? "" : mPrefs.getString("suburl",null).toString());
+
+        mFirebaseAnalytics.logEvent("function", bundle);
 
     }
 

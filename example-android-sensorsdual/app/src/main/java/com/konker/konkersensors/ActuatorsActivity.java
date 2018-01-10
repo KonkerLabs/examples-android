@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.konker.konkersensors.ActuatorsObjects.ActuatorsObjects;
 import com.konker.konkersensors.conn.ConnectActuators;
 
@@ -40,13 +41,21 @@ public class ActuatorsActivity extends Activity  {
     Boolean photo;
     LinearLayout alertLayout;
     String frequency;
-
+    private FirebaseAnalytics mFirebaseAnalytics;
 
 
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        //Bundle bundle = new Bundle();
+        //bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "ActuatorsActivity");
+        //bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "activity");
+        //mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -117,6 +126,7 @@ public class ActuatorsActivity extends Activity  {
         postSender = new ConnectActuators(actuatorObj);
 
 
+
     }
 
     public void SetViews(){
@@ -174,7 +184,7 @@ public class ActuatorsActivity extends Activity  {
 
     private View.OnClickListener backButtonClickListener = new View.OnClickListener() {
         public void onClick(View v) {
-            Intent i = new Intent(getApplicationContext(),SensorsMainActivity.class);
+            Intent i = new Intent(getApplicationContext(),ActuatorsMainActivity.class);
 
             usermessageView.setVisibility(View.VISIBLE);
             backButton.setVisibility(View.VISIBLE);
@@ -182,6 +192,7 @@ public class ActuatorsActivity extends Activity  {
             usermessageView.loadData(summary, "text/html; charset=utf-8", "utf-8");
 
             finish();
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
         }
     };

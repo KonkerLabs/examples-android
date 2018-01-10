@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 /**
  * Main activity demonstrating how to pass extra parameters to an activity that
@@ -35,19 +36,30 @@ import com.google.android.gms.vision.barcode.Barcode;
 public class MainBarActivity extends Activity implements View.OnClickListener {
 
     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-    String returnActivity;
+    String returnActivityClassName;
 
     // use a compound button so either checkbox or switch widgets work.
     private CompoundButton autoFocus;
     private CompoundButton useFlash;
     private TextView statusMessage;
     private TextView barcodeValue;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     private static final int RC_BARCODE_CAPTURE = 9001;
     private static final String TAG = "BarcodeMain";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        //Bundle bundle = new Bundle();
+        //bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "MainBarActivity");
+        //bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "activity");
+        //mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_barreader);
 
@@ -61,7 +73,7 @@ public class MainBarActivity extends Activity implements View.OnClickListener {
 
 
         Bundle b = getIntent().getExtras();
-        returnActivity=b.getString("returnactivity");
+        returnActivityClassName=b.getString("returnActivityClassName");
         readQRCODE();
     }
 
@@ -86,7 +98,7 @@ public class MainBarActivity extends Activity implements View.OnClickListener {
         intent.putExtra(BarcodeCaptureActivity.UseFlash, useFlash.isChecked());
 
         Bundle b = getIntent().getExtras();
-        returnActivity=b.getString("returnactivity");
+        returnActivityClassName=b.getString("returnActivityClassName");
         startActivityForResult(intent, RC_BARCODE_CAPTURE);
     }
 
@@ -124,21 +136,23 @@ public class MainBarActivity extends Activity implements View.OnClickListener {
                     Log.d(TAG, "Barcode read: " + barcode.displayValue);
 
                     ////////////////////////////////////////////////////
-                    if(returnActivity.equals("SensorsMain")){
-                        Intent i = new Intent(getApplicationContext(),SensorsMainActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("qrcode", barcode.displayValue);
-                        i.putExtras(b); //Put your id to your next Intent
-                        startActivity(i);
-                        finish();
-                    }else if(returnActivity.equals("ActuatorsMain")){
-                        Intent i = new Intent(getApplicationContext(),ActuatorsMainActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("qrcode", barcode.displayValue);
-                        i.putExtras(b); //Put your id to your next Intent
-                        startActivity(i);
-                        finish();
+                    Class<?> c = null;
+                    if(returnActivityClassName != null) {
+                        try {
+                            c = Class.forName(returnActivityClassName);
+                        } catch (ClassNotFoundException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
                     }
+                    Intent i = new Intent(getApplicationContext(),c);
+                    Bundle b = new Bundle();
+                    b.putString("qrcode", barcode.displayValue);
+                    i.putExtras(b); //Put your id to your next Intent
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                    finish();
+
                     ////////////////////////////////////////////////////
                 } else {
                     statusMessage.setText(R.string.barcode_failure);

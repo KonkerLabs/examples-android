@@ -133,23 +133,8 @@ public class SensorsActivity extends Activity implements SensorEventListener {
             }
         }
 
-        if(b.getBoolean("gpssensor")) {
-            try {
-                androidLocation = new AndroidLocation();
-                androidLocation.Initialize(this, 1000L);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-
-       /// }else{
-           // MaxSensors=sensorList.size();
-        //}
-
-
-
-
+        androidLocation = new AndroidLocation();
+        androidLocation.Initialize(this, 1000L);
 
         SetViews();
 

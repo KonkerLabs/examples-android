@@ -46,7 +46,6 @@ public class SensorsMainActivity extends Activity  {
     Switch rotationSwitch;
     Switch proximitySwitch;
     Switch gyroscopeSwitch;
-    Switch gpsSwitch;
     RadioButton radioRest;
     RadioButton radioMQTT;
     String radioMethod;
@@ -102,7 +101,6 @@ public class SensorsMainActivity extends Activity  {
         rotationSwitch=(Switch) findViewById(R.id.rotationSwitch);
         proximitySwitch =(Switch) findViewById(R.id.proximitySwitch);
         gyroscopeSwitch=(Switch) findViewById(R.id.gyroscopeSwitch);
-        gpsSwitch=(Switch) findViewById(R.id.gpsSwitch);
         radioRest=(RadioButton) findViewById(R.id.radioRest);
         radioMQTT=(RadioButton) findViewById(R.id.radioMQTT);
 
@@ -310,7 +308,7 @@ public class SensorsMainActivity extends Activity  {
             b.putBoolean("rotationsensor",rotationSwitch.isChecked());
             b.putBoolean("proximitysensor", proximitySwitch.isChecked());
             b.putBoolean("gyroscopesensor",gyroscopeSwitch.isChecked());
-            b.putBoolean("gpssensor",gpsSwitch.isChecked());
+            b.putBoolean("gpssensor", true);
             b.putString("method",radioMethod);
             i.putExtras(b); //Put your id to your next Intent
 
@@ -376,7 +374,7 @@ public class SensorsMainActivity extends Activity  {
         mEditor.putBoolean("rotationsensor", rotationSwitch.isChecked()).commit();
         mEditor.putBoolean("proximitysensor", proximitySwitch.isChecked()).commit();
         mEditor.putBoolean("gyroscopesensor",gyroscopeSwitch.isChecked()).commit();
-        mEditor.putBoolean("gpssensor",gpsSwitch.isChecked()).commit();
+        mEditor.putBoolean("gpssensor", true).commit();
 
         mEditor.putString("method", radioMethod).commit();
 
@@ -422,8 +420,6 @@ public class SensorsMainActivity extends Activity  {
         rotationSwitch.setChecked(mPrefs.getBoolean("rotationsensor", false));
         proximitySwitch.setChecked(mPrefs.getBoolean("proximitysensor", false));
         gyroscopeSwitch.setChecked(mPrefs.getBoolean("gyroscopesensor", false));
-        gpsSwitch.setChecked(mPrefs.getBoolean("gpssensor", false));
-
 
         Bundle bundle = new Bundle();
         if(qrcode!=null){

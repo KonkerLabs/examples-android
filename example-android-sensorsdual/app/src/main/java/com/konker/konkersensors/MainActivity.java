@@ -70,8 +70,8 @@ public class MainActivity extends Activity  {
         sensorColectorButton.setOnClickListener(sensorColectorButtonOnClickListener);
 
 
-        actuatorButton = (Button) findViewById(R.id.actuatorButton);
-        actuatorButton.setOnClickListener(actuatorButtonOnClickListener);
+//        actuatorButton = (Button) findViewById(R.id.actuatorButton);
+//        actuatorButton.setOnClickListener(actuatorButtonOnClickListener);
 
 
 

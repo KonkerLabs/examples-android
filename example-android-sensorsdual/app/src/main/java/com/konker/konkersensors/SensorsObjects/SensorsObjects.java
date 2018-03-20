@@ -19,6 +19,4 @@ public class SensorsObjects {
     public Map<String, float[]> sensorValues;
     public long startTime;
     public AndroidLocation androidLocation=new AndroidLocation();
-
-
 }

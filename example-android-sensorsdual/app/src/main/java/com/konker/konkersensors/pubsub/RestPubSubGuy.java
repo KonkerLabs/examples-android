@@ -24,7 +24,11 @@ public class RestPubSubGuy implements  IPosterGuy {
     private IPublishingListener listener;
     private String key;
 
-    public RestPubSubGuy(String userpassBase64Encoded, String targetURL, String RequestMethod, String sensorName, JSONObject jsonParam){
+    public RestPubSubGuy(String userpassBase64Encoded,
+                         String targetURL,
+                         String RequestMethod,
+                         String sensorName,
+                         JSONObject jsonParam){
         this.userpassBase64Encoded=userpassBase64Encoded;
         this.targetURL=targetURL;
         this.RequestMethod=RequestMethod;

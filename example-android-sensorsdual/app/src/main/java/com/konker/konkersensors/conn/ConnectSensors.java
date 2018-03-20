@@ -163,6 +163,10 @@ public class ConnectSensors {
             JSONObject json = new JSONObject();
 
             json.put("timestamp", new Date().toString());
+            json.put("_lat", sensorObj.androidLocation.getFusedLatitude());
+            json.put("_lon", sensorObj.androidLocation.getFusedLongitude());
+            json.put("_hdop", 10);
+            json.put("_elev", sensorObj.androidLocation.getFusedAltitude());
 
             float[] values = s.get(sensorName);
             for (int i = 0; i < values.length; i++) {
@@ -278,42 +282,9 @@ public class ConnectSensors {
                     }
                 }
             }
-
-            if(sensorObj.androidLocation!=null){
-                TextView debugTextViewLocation = sensorObj.screenObjects.debugViews[dv];
-                TextView debugTextViewSpeed = sensorObj.screenObjects.debugViews[dv+1];
-                TextView debugTextViewAltitude = sensorObj.screenObjects.debugViews[dv+2];
-
-                String lat =sensorObj.androidLocation.getFusedLatitude();
-                String lon =sensorObj.androidLocation.getFusedLongitude();
-                String speed =sensorObj.androidLocation.getFusedSpeed();
-                String altitude =sensorObj.androidLocation.getFusedAltitude();
-
-                if(lat!=null && lon!=null){
-                    sensorObj.sensorValues.put("Location", new float[]{Float.parseFloat(lat), Float.parseFloat(lon)});
-                    debugTextViewLocation.setText("Location\nlat: " + lat +"\nlon: " + lon);
-                }
-
-                if(speed!=null){
-                    sensorObj.sensorValues.put("Speed", new float[]{Float.parseFloat(speed)});
-                    debugTextViewSpeed.setText("Speed\n" + speed);
-                }
-                if(altitude!=null){
-                    sensorObj.sensorValues.put("Altitude", new float[]{Float.parseFloat(altitude)});
-                    debugTextViewAltitude.setText("Altitude\n" + altitude );
-                }
-
-
-
-
-
-
-            }
         }
 
     }
-
-
 
     public void stopAll() {
         setMessageInvisible();

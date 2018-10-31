@@ -167,7 +167,16 @@ public class ConnectSensors {
             float[] values = s.get(sensorName);
             for (int i = 0; i < values.length; i++) {
                 //populate json with sensor values
-                json.put("val" + (i + 1), Double.valueOf(values[i]));
+                if(sensorName=="Location"){
+                    if(i==0){
+                        json.put("_lat", Double.valueOf(values[i]));
+                    }else if(i==1){
+                        json.put("_lon", Double.valueOf(values[i]));
+                    }
+                }else{
+                    json.put("val" + (i + 1), Double.valueOf(values[i]));
+                }
+
             }
 
             //encode uswername and password
